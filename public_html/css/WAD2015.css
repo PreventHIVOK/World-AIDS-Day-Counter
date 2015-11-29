@@ -1,0 +1,174 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Nov 29, 2015, 6:08:08 AM
+    Author     : Curtis Blumer
+*/
+
+body {
+    background: #E0E0E0;
+    font-family: 'Ubuntu', sans-serif;
+    margin: 0 auto;
+    text-align: center;
+}
+
+a {
+    color: #330011;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #660011;
+    text-decoration: underline;
+}
+
+section {
+    width: 100%;
+}
+
+#site-header {
+    background: #110000;
+    color: #FFF;
+    margin-bottom: 0;
+    padding-bottom: 2em;
+    padding-top: 2em;
+}
+
+#site-header h1,
+#site-header h2 {
+    margin: 0;
+    font-variant: small-caps;
+}
+
+#site-footer {
+    margin: 2.5em auto 1em;
+    width: 60%;
+}
+
+#HIV-resources > section {
+    display: inline-block;
+    width: 48.25%;
+}
+#HIV-resources-today-US,
+#HIV-resources-this-year-US {
+    display: inline-block;
+    width: 100%;
+}
+
+#HIV-resources-today-US > h1,
+#HIV-resources-this-year-US > h1 {
+    display: none;
+}
+
+#HIV-resources-today-Oklahoma,
+#HIV-resources-this-year-Oklahoma,
+#HIV-resources-today-Worldwide,
+#HIV-resources-this-year-Worldwide {
+    display: none;
+}
+
+section.top-level {
+    /* background: #CCC; */
+    margin: 1em 0 0;
+    paddin: 0;
+
+}
+
+section.top-level > h1 {
+    color: #330011;
+    font-variant: small-caps;
+    margin: 0;
+    padding: 0;
+}
+
+section.mid-level {
+    /* background: #AAA; */
+    padding: 0;
+    margin: 0.25em 0 0;
+}
+
+section.mid-level > h1 {
+    color: #990022;
+    margin: 0;
+    padding: 0;
+}
+
+section.low-level {
+    /* background: #999; */
+    display: inline-block;
+    margin: 0.25em 0 0;
+    width: 32%;
+}
+
+section.low-level > h1 {
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+}
+
+section.low-level.left {
+    /* background: #F00; */
+}
+
+section.low-level.middle {
+    /* background: #0F0; */
+}
+
+section.low-level.right {
+    /* background: #00F; */
+}
+
+section.low-level span {
+    font-size: 2em;
+}
+
+@media screen and (max-width: 480px) /* Mobile */ {
+    body {
+        /* background: #F66; */
+        font-size: 0.75em;
+    }
+    
+    #HIV-resources > section {
+        display: block;
+        width: 100%;
+    }
+    #HIV-resources-today-US,
+    #HIV-resources-this-year-US {
+        display: block;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 640px) /* Tablet */ {
+    body {
+        font-size: 0.9em;
+    }
+    
+    /*#HIV-resources > section {
+        display: block;
+        width: 100%;
+    }*/
+    /*#HIV-resources-today-US,
+    #HIV-resources-this-year-US {
+        display: block;
+        width: 100%;
+    }*/
+}
+
+@media screen and (min-width: 641px) and (max-width: 1024px) /* Tablet */ {
+    body {
+        /* background: #6F6; */
+        font-size: 1em;
+    }
+}
+
+@media screen and (min-width: 1025px) /* Desktop */ {
+    body {
+        /* background: #66F; */
+        font-size: 1.1em;
+    }
+}

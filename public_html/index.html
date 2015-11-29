@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>World AIDS Day | Prevent HIV Oklahoma</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- CSS files -->
+        <link href="css/WAD2015.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu&subset=latin" rel="stylesheet" type="text/css">
+        <!-- Site icon -->
+        <link rel="icon" href="http://i0.wp.com/preventhivok.org/wp-content/uploads/2015/09/cropped-Prevent-HIV-OK-logo-512x5121.png?fit=32%2C32" sizes="32x32">
+        <link rel="icon" href="http://i0.wp.com/preventhivok.org/wp-content/uploads/2015/09/cropped-Prevent-HIV-OK-logo-512x5121.png?fit=192%2C192" sizes="192x192">
+        <link rel="apple-touch-icon-precomposed" href="http://i0.wp.com/preventhivok.org/wp-content/uploads/2015/09/cropped-Prevent-HIV-OK-logo-512x5121.png?fit=180%2C180">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+        <script src="js/wad2015counter.js"></script>
+        <script>
+            /**
+             * Calculate the incidence of infections or deaths
+             * 
+             * @param {string} location The location of the rate of incidence.
+             * @param {string} type The type of incidence.
+             * @param {string} timeframe The timeframe for the rate of incidence.
+             * 
+             * @returns {integer}
+             * 
+             * @example calcIncidence( "Oklahoma", "infections", "today" );
+             * @example calcIncidence( "US", "deaths", "this year" );
+             * @example calcIncidence( "Worldwide", "infections", "today" );
+             */
+            function calcIncidence( location, type, timeframe ) {
+                var _timeframe, _type;
+                
+                switch(type) {
+                    case "infections":
+                        _type = secondsPerHivInfection[location];
+                        break;
+                    case "deaths":
+                        _type = secondsPerHivDeath[location];
+                        break;
+                    case "resources":
+                        _type = secondsPerDollarSpent[location];
+                }
+                                
+                switch(timeframe) {
+                    case "today":
+                        _timeframe = secondsSinceMidnightToday();
+                        break;
+                    case "this year":
+                        _timeframe = secondsSinceMidnightThisYear();
+                        break;
+                }
+                                
+                return Math.ceil( _timeframe / _type );
+            }
+            
+            function numberWithCommas(number) {
+                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+            
+            function incidenceWithCommas( location, type, timeframe ) {
+                return numberWithCommas( calcIncidence( location, type, timeframe ) );
+            }
+            
+            jQuery.noConflict();
+            
+            jQuery( document ).ready( function( $ ) {                
+                function updateInfectionCounters() {
+                    $( "#HIV-incidence-today-Oklahoma span" ).html( incidenceWithCommas( "Oklahoma", "infections", "today" ) );
+                    $( "#HIV-incidence-today-US span" ).html( incidenceWithCommas( "US", "infections", "today" ) );
+                    $( "#HIV-incidence-today-Worldwide span" ).html( incidenceWithCommas( "Worldwide", "infections", "today" ) );
+                    
+                    $( "#HIV-incidence-this-year-Oklahoma span" ).html( incidenceWithCommas( "Oklahoma", "infections", "this year" ) );
+                    $( "#HIV-incidence-this-year-US span" ).html( incidenceWithCommas( "US", "infections", "this year" ) );
+                    $( "#HIV-incidence-this-year-Worldwide span" ).html( incidenceWithCommas( "Worldwide", "infections", "this year" ) );
+                };
+                
+                function updateDeathCounters() {
+                    $( "#HIV-deaths-today-Oklahoma span" ).html( incidenceWithCommas( "Oklahoma", "deaths", "today" ) );
+                    $( "#HIV-deaths-today-US span" ).html( incidenceWithCommas( "US", "deaths", "today" ) );
+                    $( "#HIV-deaths-today-Worldwide span" ).html( incidenceWithCommas( "Worldwide", "deaths", "today" ) );
+
+                    $( "#HIV-deaths-this-year-Oklahoma span" ).html( incidenceWithCommas( "Oklahoma", "deaths", "this year" ) );
+                    $( "#HIV-deaths-this-year-US span" ).html( incidenceWithCommas( "US", "deaths", "this year" ) );
+                    $( "#HIV-deaths-this-year-Worldwide span" ).html( incidenceWithCommas( "Worldwide", "deaths", "this year" ) );
+                };
+                
+                function updateResourceCounters() {
+                    $( "#HIV-resources-today-US span" ).html( "$" + incidenceWithCommas( "US", "resources", "today" ) );
+                    $( "#HIV-resources-this-year-US span" ).html( "$" + incidenceWithCommas( "US", "resources", "this year" ) );
+                }
+                
+                function updateAllCounters() {
+                    updateInfectionCounters();
+                    updateDeathCounters();
+                    updateResourceCounters();
+                }
+                
+                updateAllCounters();
+                setInterval( updateAllCounters, 1000 );
+            });
+        </script>
+    </head>
+    <body>
+        <header id="site-header">
+            <hgroup>
+                <h1>World AIDS Day 2015</h1>
+                <h2>The Time to Act is Now!</h2>
+            </hgroup>
+        </header>
+        <section id="HIV-resources" class="top-level">
+            <h1>Money Spent on HIV in the U.S.</h1>
+            <section id="HIV-resources-today" class="mid-level">
+                <h1>Today</h1>
+                <section id="HIV-resources-today-Oklahoma" class="low-level left">
+                    <h1>Oklahoma</h1>
+                    <span>0</span>
+                </section>
+                <section id="HIV-resources-today-US" class="low-level middle">
+                    <h1>United States</h1>
+                    <span>0</span>
+                </section>
+                <section id="HIV-resources-today-Worldwide" class="low-level right">
+                    <h1>Worldwide</h1>
+                    <span>0</span>
+                </section>
+            </section>
+            <section id="HIV-resources-this-year" class="mid-level">
+                <h1>This Year</h1>
+                <section id="HIV-resources-this-year-Oklahoma" class="low-level left">
+                    <h1>Oklahoma</h1>
+                    <span>0</span>
+                </section>
+                <section id="HIV-resources-this-year-US" class="low-level middle">
+                    <h1>United States</h1>
+                    <span>0</span>
+                </section>
+                <section id="HIV-resources-this-year-Worldwide" class="low-level right">
+                    <h1>Worldwide</h1>
+                    <span>0</span>
+                </section>
+            </section>
+        </section>
+        <section id="HIV-incidence" class="top-level">
+            <h1>HIV Infections</h1>
+            <section id="HIV-incidence-today" class="mid-level">
+                <h1>HIV Infections Today</h1>
+                <section id="HIV-incidence-today-Oklahoma" class="low-level left">
+                    <h1>Oklahoma</h1>
+                    <span>0</span>
+                </section>
+                <section id="HIV-incidence-today-US" class="low-level middle">
+                    <h1>United States</h1>
+                    <span>0</span>
+                </section>
+                <section id="HIV-incidence-today-Worldwide" class="low-level right">
+                    <h1>Worldwide</h1>
+                    <span>0</span>
+                </section>
+            </section>
+            <section id="HIV-incidence-this-year" class="mid-level">
+                <h1>HIV Infections since Jan. 1<sup>st</sup></h1>
+                <section id="HIV-incidence-this-year-Oklahoma" class="low-level left">
+                    <h1>Oklahoma</h1>
+                    <span>0</span>
+                </section>
+                <section id="HIV-incidence-this-year-US" class="low-level middle">
+                    <h1>United States</h1>
+                    <span>0</span>
+                </section>
+                <section id="HIV-incidence-this-year-Worldwide" class="low-level right">
+                    <h1>Worldwide</h1>
+                    <span>0</span>
+                </section>
+            </section>
+        </section>
+        <section id="HIV-deaths" class="top-level">
+            <h1>AIDS-related Deaths</h1>
+            <section id="HIV-deaths-today" class="mid-level">
+                <h1>AIDS-related Deaths Today</h1>
+                <section id="HIV-deaths-today-Oklahoma" class="low-level left">
+                    <h1>Oklahoma</h1>
+                    <span>0</span>
+                </section>
+                <section id="HIV-deaths-today-US" class="low-level middle">
+                    <h1>United States</h1>
+                    <span>0</span>
+                </section>
+                <section id="HIV-deaths-today-Worldwide" class="low-level right">
+                    <h1>Worldwide</h1>
+                    <span>0</span>
+                </section>
+            </section>
+            <section id="HIV-deaths-this-year" class="mid-level">
+                <h1>AIDS-related Deaths since Jan. 1<sup>st</sup></h1>
+                <section id="HIV-deaths-this-year-Oklahoma" class="low-level left">
+                    <h1>Oklahoma</h1>
+                    <span>0</span>
+                </section>
+                <section id="HIV-deaths-this-year-US" class="low-level middle">
+                    <h1>United States</h1>
+                    <span>0</span>
+                </section>
+                <section id="HIV-deaths-this-year-Worldwide" class="low-level right">
+                    <h1>Worldwide</h1>
+                    <span>0</span>
+                </section>
+            </section>
+        </section>
+        <footer id="site-footer">
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+                <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
+            </a>
+            <br />
+            This <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" rel="dct:type">work</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://preventhivok.org" property="cc:attributionName" rel="cc:attributionURL">Prevent HIV Oklahoma</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+        </footer>
+    </body>
+</html>
