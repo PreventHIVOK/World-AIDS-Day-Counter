@@ -16,8 +16,10 @@ var hivInfectionsPerYear = [],
     secondsPerHivInfection = [],
 /** JSON array of seconds between AIDS-related deaths. @type {Object} */
     secondsPerHivDeath = [],
-/** JSON array of HIV-related resource spent. @type {Object} */
-    hivResourcesSpent = [];
+/** JSON array of HIV-related resources spent. @type {Object} */
+    hivResourcesSpent = [],
+/** JSON array of seconds between HIV-related resources spent. @type {Object} */
+    secondsPerDollarSpent = [];
 
 /**
  * Returns the number of days in a given year, accounting for leap years.
@@ -161,6 +163,53 @@ hivInfectionsPerSecond = {
     "US": occurancesPerSecond( hivInfectionsPerYear.US.year, hivInfectionsPerYear.US.count ),
     "Worldwide": occurancesPerSecond( hivInfectionsPerYear.Worldwide.year, hivInfectionsPerYear.Worldwide.count )
 };
+
+/**
+ * Calculate the incidence of infections or deaths
+ * 
+ * @param {string} location The location of the rate of incidence.
+ * @param {string} type The type of incidence.
+ * @param {string} timeframe The timeframe for the rate of incidence.
+ * 
+ * @returns {integer}
+ * 
+ * @example calcIncidence( "Oklahoma", "infections", "today" );
+ * @example calcIncidence( "US", "deaths", "this year" );
+ * @example calcIncidence( "Worldwide", "infections", "today" );
+ */
+function calcIncidence( location, type, timeframe ) {
+    var _timeframe, _type;
+
+    switch(type) {
+        case "infections":
+            _type = secondsPerHivInfection[location];
+            break;
+        case "deaths":
+            _type = secondsPerHivDeath[location];
+            break;
+        case "resources":
+            _type = secondsPerDollarSpent[location];
+    }
+
+    switch(timeframe) {
+        case "today":
+            _timeframe = secondsSinceMidnightToday();
+            break;
+        case "this year":
+            _timeframe = secondsSinceMidnightThisYear();
+            break;
+    }
+
+    return Math.ceil( _timeframe / _type );
+}
+
+function numberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function incidenceWithCommas( location, type, timeframe ) {
+    return numberWithCommas( calcIncidence( location, type, timeframe ) );
+}
 
 // Set the number of second between HIV infections
 secondsPerHivInfection = {
